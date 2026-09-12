@@ -19,7 +19,8 @@ $STD apt-get install -y \
   curl \
   unzip \
   ca-certificates \
-  openssl
+  openssl \
+  make
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Bun"
