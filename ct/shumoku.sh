@@ -8,7 +8,7 @@ source <(curl -fsSL https://raw.githubusercontent.com/cojumbo/ProxmoxVE/main/mis
 
 APP="Shumoku"
 var_tags="${var_tags:-network;monitoring;diagram}"
-var_cpu="${var_cpu:-4}"
+var_cpu="${var_cpu:-2}"
 var_ram="${var_ram:-2048}"
 var_disk="${var_disk:-6}"
 var_os="${var_os:-debian}"
