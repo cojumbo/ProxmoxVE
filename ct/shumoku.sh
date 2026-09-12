@@ -12,7 +12,7 @@ var_cpu="${var_cpu:-2}"
 var_ram="${var_ram:-1024}"
 var_disk="${var_disk:-6}"
 var_os="${var_os:-debian}"
-var_version="${var_version:-12}"
+var_version="${var_version:-13}"
 var_unprivileged="${var_unprivileged:-1}"
 
 header_info "$APP"
@@ -31,9 +31,9 @@ function update_script() {
   fi
 
   msg_info "Updating $APP"
-  cd /opt/shumoku
+  cd /opt/shumoku || exit
   git pull
-  cd apps/server
+  cd apps/server || exit
   make setup
   systemctl restart shumoku
   msg_ok "Updated $APP"
@@ -48,3 +48,5 @@ msg_ok "Completed Successfully!\n"
 echo -e "${CREATIVE_TAB}${APP} setup has been successfully initialized!\n"
 echo -e "${INFO}${YW} Access it using the following URL:${CL}"
 echo -e "${TAB}${GATEWAY}${BGN}http://${IP}:8080${CL}\n"
+echo -e "${INFO}${YW} Initial admin password was generated on first boot. Retrieve it with:${CL}"
+echo -e "${TAB}${GATEWAY}${BGN}pct exec ${CTID} -- cat /var/lib/shumoku/.bootstrap_admin_password${CL}\n"
