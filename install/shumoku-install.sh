@@ -54,6 +54,16 @@ echo -n "$ADMIN_PASSWORD" >/var/lib/shumoku/.bootstrap_admin_password
 chmod 600 /var/lib/shumoku/.bootstrap_admin_password
 msg_ok "Generated Initial Admin Password"
 
+msg_info "Creating Configuration File"
+cat <<EOF >/opt/shumoku.env
+DATA_DIR=/var/lib/shumoku
+PORT=8080
+HOST=0.0.0.0
+SHUMOKU_BOOTSTRAP_ADMIN_PASSWORD_FILE=/var/lib/shumoku/.bootstrap_admin_password
+EOF
+chmod 600 /opt/shumoku.env
+msg_ok "Created Configuration File"
+
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/shumoku.service
 [Unit]
@@ -63,10 +73,7 @@ After=network.target
 [Service]
 Type=simple
 WorkingDirectory=/opt/shumoku/apps/server
-Environment=DATA_DIR=/var/lib/shumoku
-Environment=PORT=8080
-Environment=HOST=0.0.0.0
-Environment=SHUMOKU_BOOTSTRAP_ADMIN_PASSWORD_FILE=/var/lib/shumoku/.bootstrap_admin_password
+EnvironmentFile=-/opt/shumoku.env
 ExecStart=/usr/local/bin/bun run start
 Restart=on-failure
 RestartSec=5
